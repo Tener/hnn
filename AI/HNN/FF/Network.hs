@@ -29,7 +29,7 @@
 -- typeclasses. Having your number type implement the @Floating@ typeclass too is a good idea, since that's what most of the
 -- common activation functions require.
 
-module AI.HNN.FF.Network (Network, Vec, createNetwork, computeNetworkWith, computeNetworkWithS, sigmoid, tanh) where
+module AI.HNN.FF.Network (Network, Vec, createNetwork, computeNetworkWith, computeNetworkWithS, sigmoid, tanh, loadNetwork) where
 
 import qualified Data.Vector         as V
 import qualified Data.Vector.Unboxed as U
@@ -62,6 +62,19 @@ createNetwork nI as = withSystemRandom . asGenST $ \gen -> do
           go a archs (ms `V.snoc` m') (ts `V.snoc` t) g
 
         randomMatrix n m g = uniformVector g (n*m)
+
+loadNetwork :: U.Unbox a => [[a]] -> [[[a]]] -> Network a
+loadNetwork threshs mats = Network ms ts n archi
+  where ms    = V.fromList $ map listToMatrix mats
+        ts    = V.fromList $ map U.fromList threshs
+        archi = map length threshs
+        n     = cols (V.head ms)
+
+listToMatrix :: U.Unbox a => [[a]] -> Matrix a
+listToMatrix m = let r = length m
+                     c = length (head m)
+                 in Matrix (U.fromList (concat m)) r c
+
 
 -- Helper function that computes the output of a given layer
 computeLayerWith :: (U.Unbox a, Num a) => Vec a -> (Matrix a, Vec a, a -> a) -> Vec a
