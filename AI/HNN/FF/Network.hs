@@ -44,7 +44,7 @@ data Network a = Network
                  , thresholds :: !(V.Vector (Vec a))
                  , nInputs    :: {-# UNPACK #-} !Int
                  , arch       :: ![Int]
-                 }
+                 } deriving (Eq, Ord, Show)
 
 -- | The following creates a neural network with 'n' inputs and if 'l' is [n1, n2, ...]
 --   the net will have n1 neurons on the first layer, n2 neurons on the second, and so on
