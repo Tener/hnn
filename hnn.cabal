@@ -2,7 +2,7 @@
 -- see http://haskell.org/cabal/users-guide/
 
 name:                hnn
-version:             0.2.0.0
+version:             0.2.0.0.20121218
 synopsis:            A fast and simple neural network library
 description:         
     .
@@ -28,7 +28,7 @@ cabal-version:       >=1.8
 library
   exposed-modules:     AI.HNN.FF.Network
   other-modules:       AI.HNN.Internal.Matrix       
-  build-depends:       base ==4.5.*,
+  build-depends:       base ==4.*,
                        vector,
                        mwc-random
   ghc-options:         -O2 -funbox-strict-fields -Wall
