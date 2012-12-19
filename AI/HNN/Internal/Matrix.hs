@@ -9,7 +9,7 @@ data Matrix a = Matrix
                 { mat   :: !(U.Vector a)
                 , rows  :: {-# UNPACK #-} !Int
                 , cols  :: {-# UNPACK #-} !Int
-                }
+                } deriving (Eq, Ord)
 matMap :: U.Unbox a => (a -> a) -> Matrix a -> Matrix a
 matMap f (Matrix{..}) = Matrix (U.map f mat) rows cols
 
